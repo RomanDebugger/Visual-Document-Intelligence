@@ -1,0 +1,28 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# Environment variables (Crucial for API keys)
+.env
+
+# Project specific: Documents & Vector Index
+data/raw_docs/*
+data/chunks/*
+data/index/*
+!data/raw_docs/.gitkeep
+
+# Visualization output
+*.png
+*.jpg
+*.html
+
+# OS generated files
+.DS_Store
+Thumbs.db
