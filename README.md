@@ -1,178 +1,70 @@
-# 📄 Visual Document Intelligence System  
-### Using Large Language Models and Vector Databases
+# Visual Document Intelligence System
 
+## Project Description
 
-## 📌 Overview
+The Visual Document Intelligence System is a practical AI application designed to improve how users interact with PDF documents. Traditional search methods rely on exact keyword matching, which often fails when users use synonyms or related concepts. This system implements Semantic Search, allowing users to query documents based on meaning and intent.
 
-The **Visual Document Intelligence System** is an AI-powered application that allows users to upload documents and query them using natural language.  
-Instead of relying on traditional keyword-based search, the system understands the **semantic meaning** of both documents and queries, retrieves the most relevant information, and visually explains *why* the retrieved content is relevant.
+The project is built as a Retrieval-Augmented Generation (RAG) prototype that emphasizes explainability by providing visual feedback on how the AI retrieved specific information.
 
-The project focuses on **semantic document understanding, explainability, and visualization**, making it suitable for academic evaluation and practical demonstration.
+## Problem Statement
 
+Standard document search tools (like Ctrl+F) are limited by literal string matching. If a user searches for "financial health" but the document uses the term "fiscal stability," the search will return no results. Furthermore, many AI systems provide answers without showing the source or the confidence level of the retrieval. This project addresses these issues by:
 
-## 🎯 Motivation
+1. Understanding the conceptual relationship between words.
+2. Visualizing the relevance scores of retrieved document sections.
+3. Mapping the exact location (page number) of the source material.
 
-With the rapid increase in digital documents (PDFs, reports, notes), finding relevant information has become difficult. Traditional search systems:
+## Core Objectives
 
-- Depend heavily on exact keyword matching  
-- Fail to capture contextual meaning  
-- Do not explain why a result is relevant  
+* Implement a text extraction pipeline for PDF documents.
+* Apply a recursive chunking strategy to maintain context during processing.
+* Generate high-dimensional vector embeddings to represent document meaning.
+* Utilize a vector database for efficient similarity searching.
+* Provide visual metrics to explain the AI's retrieval process.
 
-This project aims to overcome these limitations by combining **LLMs**, **vector databases**, and **visual analytics** to create a more intelligent and interpretable document search system.
+## System Architecture
 
+The system operates through a modular four-stage pipeline:
 
-## ❓ Problem Statement
+1. **Ingestion:** Extracts raw text from PDF files using the pypdf library.
+2. **Processing:** Breaks long text into 600-character segments with a 50-character overlap to ensure no context is lost at the boundaries.
+3. **Vectorization:** Converts text segments into 384-dimensional vectors using the Sentence-Transformers model (all-MiniLM-L6-v2).
+4. **Retrieval:** Compares the user's question vector against the stored document vectors using the FAISS library to find the most mathematically similar content.
 
-Keyword-based document search systems are limited in their ability to understand context, intent, and semantic meaning. As a result, users often receive irrelevant or incomplete results and lack visibility into how answers are derived.
+## Technical Stack
 
-There is a need for a system that:
-- Understands user queries semantically  
-- Retrieves relevant document sections accurately  
-- Provides visual insights into document relevance  
+* **Language:** Python
+* **API Framework:** FastAPI
+* **AI Model:** Sentence-Transformers (all-MiniLM-L6-v2)
+* **Vector Database:** FAISS (Facebook AI Similarity Search)
+* **Data Handling:** Pandas, NumPy
+* **Visualization:** Matplotlib / Plotly
 
+## Project Structure
 
-## 🎯 Objectives
-
-The main objectives of this project are:
-
-- Enable **natural language querying** over documents  
-- Perform **semantic search** using vector embeddings  
-- Generate **context-aware answers** using retrieved document content  
-- Provide **visual explanations** for document relevance  
-- Build a **simple, deployable prototype** suitable for a college project  
-
-
-## 🧠 What Makes This System Intelligent?
-
-The system is considered intelligent because it:
-
-- Understands **semantic meaning**, not just keywords  
-- Uses **vector embeddings** to compare document content and queries  
-- Retrieves information based on **contextual similarity**  
-- Grounds responses in **actual document content**  
-- Visually explains **why** certain document sections were selected  
-
-This approach makes the system transparent, interpretable, and user-friendly.
-
-
-## 🏗️ System Architecture
-
-The system follows a modular pipeline-based architecture:
-
-1. **Document Upload**  
-   Users upload PDF or text documents.
-
-2. **Document Processing**  
-   Documents are parsed and divided into smaller chunks (page-level or fixed-size text chunks).
-
-3. **Embedding Generation**  
-   Each chunk is converted into a numerical vector representation using a pre-trained embedding model.
-
-4. **Vector Storage**  
-   The embeddings are stored in a vector database to enable fast semantic similarity search.
-
-5. **Query Processing**  
-   User queries are embedded and compared with stored document embeddings.
-
-6. **Semantic Retrieval**  
-   The most relevant document chunks are retrieved based on similarity scores.
-
-7. **LLM-Based Answer Generation**  
-   Retrieved chunks are passed to a language model to generate a concise, context-aware response.
-
-8. **Visual Intelligence Layer**  
-   Visualizations are generated to show relevance scores, document contribution, and similarity distribution.
-
-
-## 📊 Visual Intelligence Features
-
-To improve interpretability, the system provides:
-
-- **Relevance Score Charts** – show how closely document chunks match the query  
-- **Page-Level Heatmaps** – indicate where relevant information appears in a document  
-- **Top-K Similarity Visuals** – compare retrieved chunks based on similarity  
-
-These visuals help users understand *what* was retrieved and *why*.
-
-
-## 🧪 Technologies Used
-
-- **Programming Language:** Python  
-- **Backend Framework:** FastAPI  
-- **Embedding Model:** Sentence Transformers  
-- **Vector Database:** FAISS (local vector storage)  
-- **LLM Integration:** API-based or local LLM (for answer generation)  
-- **Visualization Tools:** Matplotlib / Plotly  
-- **Version Control:** Git & GitHub  
-
-
-## 📁 Project Structure
-
+```
 doc-intel/
-│
 ├── backend/
-│ ├── main.py # FastAPI entry point
-│ ├── ingest.py # Document ingestion
-│ ├── chunker.py # Text chunking logic
-│ ├── embeddings.py # Embedding generation
-│ ├── vector_store.py # Vector database handling
-│ ├── query.py # Semantic search logic
-│
+│   ├── main.py           # API Entry point
+│   ├── ingest.py         # Document extraction
+│   ├── chunker.py        # Text processing logic
+│   ├── embeddings.py     # Vector generation
+│   ├── vector_store.py   # Database management
+│   └── query.py          # Search and retrieval logic
 ├── data/
-│ ├── raw_docs/ # Uploaded documents
-│ ├── chunks/ # Processed text chunks
-│ └── index/ # Vector index storage
-│
-├── frontend/ # Minimal UI (optional)
-│
-├── requirements.txt
-└── README.md
+│   ├── raw_docs/         # Source PDF storage
+│   └── index/            # Saved vector indices
+├── requirements.txt      # Dependency list
+└── README.md             # Documentation
 
+```
 
-## 🚧 Project Scope and Limitations
+## Functional Advantages
 
-### Scope
-- Supports **text-based documents** (PDF/Text)
-- Designed for **single-user usage**
-- Focuses on **semantic search and visualization**
-- Intended as a **prototype**, not a production system
+* **Contextual Awareness:** Recognizes synonyms and related topics.
+* **Explainable Outputs:** Shows numerical relevance scores for every retrieved chunk.
+* **Lightweight Deployment:** Designed to run on standard consumer hardware without requiring high-end GPUs.
 
-### Limitations
-- Does not fine-tune language models  
-- Does not support real-time multi-user access  
-- Limited to small-to-medium document collections  
+## Conclusion
 
-
-## 🎓 Academic Relevance
-
-This project demonstrates practical applications of:
-
-- Natural Language Processing (NLP)  
-- Vector similarity search  
-- Large Language Models (LLMs)  
-- Explainable AI concepts  
-- Data visualization techniques  
-
-It is suitable for **minor/major projects**, viva examinations, and academic demonstrations.
-
-
-## ✅ Expected Outcomes
-
-- A working semantic document search system  
-- Accurate retrieval of relevant document sections  
-- Context-aware natural language answers  
-- Visual explanations for document relevance  
-- A clean, understandable codebase  
-
-
-## 🔮 Future Enhancements (Optional)
-
-- Multi-document comparison  
-- Advanced chunking strategies  
-- Improved visualization dashboards  
-- Support for additional document formats  
-
-
-## 🏁 Conclusion
-
-The Visual Document Intelligence System provides an interpretable and intelligent approach to document search by combining semantic embeddings, vector databases, and visual analytics. The project focuses on clarity, explainability, and practical implementation, making it well-suited for academic evaluation and real-world learning.
+This system demonstrates a functional bridge between raw data and actionable intelligence. By focusing on semantic retrieval and visual explanation, it provides a transparent and efficient way to manage and query complex document collections.
