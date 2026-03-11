@@ -14,7 +14,7 @@ torch==2.2.0
 numpy==1.26.3
 
 # --- Vector Database ---
-faiss-cpu==1.7.4
+faiss-cpu==1.8.0
 
 # --- LLM Integration (Choose one or keep both) ---
 openai==1.10.0
