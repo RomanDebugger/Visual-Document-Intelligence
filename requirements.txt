@@ -23,3 +23,7 @@ faiss-cpu==1.8.0
 
 python-dotenv==1.0.1
 tqdm==4.66.1
+
+#--- LLM API --- 
+
+google-generativeai
