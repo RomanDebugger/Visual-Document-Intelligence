@@ -19,14 +19,12 @@ async def upload_pdf(file: UploadFile = File(...)):
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
 
-    query_engine.process_document(file_path)
+    query_engine.setup_document(file_path)
 
     return {"message": "PDF uploaded and processed successfully"}
 
 
 @app.get("/ask")
 def ask_question(question: str):
-
-    results = query_engine.query(question)
-
+    results = query_engine.ask(question)
     return {"results": results}
