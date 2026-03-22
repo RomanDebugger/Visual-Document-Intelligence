@@ -14,7 +14,7 @@ load_dotenv()
 
 # Configure Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-model = genai.GenerativeModel("gemini-1.5-flash")
+model = genai.GenerativeModel("gemini-2.5-flash")
 
 # FastAPI app
 app = FastAPI()
@@ -81,7 +81,7 @@ rag = RAGController()
 @app.post("/upload")
 async def upload_pdf(file: UploadFile = File(...)):
 
-    file_location = f"data/{file.filename}"
+    file_location = f"data/raw_docs/{file.filename}"
 
     with open(file_location, "wb") as f:
         f.write(await file.read())

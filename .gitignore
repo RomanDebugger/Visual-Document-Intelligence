@@ -16,6 +16,7 @@ ENV/
 data/raw_docs/*
 data/chunks/*
 data/index/*
+data/
 !data/raw_docs/.gitkeep
 
 # Visualization output
