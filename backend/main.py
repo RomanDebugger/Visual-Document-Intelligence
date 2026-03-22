@@ -9,15 +9,21 @@ from backend.ingest import PDFIngestor
 from backend.chunker import DocumentChunker
 from backend.embeddings import EmbeddingEngine
 from backend.vector_store import VectorDatabase
+from fastapi.middleware.cors import CORSMiddleware
 
 load_dotenv()
 
-# Configure Gemini
 genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
 model = genai.GenerativeModel("gemini-2.5-flash")
 
-# FastAPI app
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 class QueryRequest(BaseModel):
     question: str
