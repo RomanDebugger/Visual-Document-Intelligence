@@ -16,7 +16,7 @@ function App() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("http://localhost:8000/upload", {
+      const res = await fetch("http://backend:8000/upload", {
         method: "POST",
         body: formData,
       });
@@ -36,7 +36,7 @@ const handleAsk = async () => {
   setMessages((prev) => [...prev, userMessage]);
 
   try {
-    const res = await fetch("http://localhost:8000/ask", {
+    const res = await fetch("http://backend:8000/ask", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

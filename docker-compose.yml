@@ -6,12 +6,13 @@ services:
     env_file: .env
 
   frontend:
-    image: python:3.10-slim
-    volumes:
-      - ./frontend:/app/frontend
+    image: node:18
     working_dir: /app
-    command: sh -c "pip install streamlit requests pandas && streamlit run frontend/app.py --server.port 8501 --server.address 0.0.0.0"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     ports:
-      - "8501:8501"
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev -- --host"
     depends_on:
       - backend
